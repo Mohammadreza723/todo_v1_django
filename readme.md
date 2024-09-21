@@ -1,0 +1,1 @@
+this is a simple todo app created with django :).
