@@ -35,30 +35,25 @@
         <br />
         <ul class="list-group">
           {% for task in tasks %}
-            <li class="list-group-item d-flex flex-row align-items-center justify-content-between">
-              <span>
-                {{ task.title }}
-              </span>              
-              <div class="d-flex flex-row">
-                <form method="post" action="/update_task/" class="mx-1">
-                  <button class="btn btn-secondary">
-                    Edit
-                  </button>
-                </form>
-                <form method="post" action="/complete_task/" class="mx-1">
-                  <button class="btn btn-success">
-                    Complete
-                  </button>
-                </form>
-                <form method="post" action="/remove_task/" class="mx-1">
-                  <button class="btn btn-danger">
-                    <a href="/remove_task/{{ task.id }}" class="text-decoration-none text-white">
-                      Remove
-                    </a>
-                  </button>
-                </form>
-              </div>
-            </li>
+            {% if not task.complete %}
+              <li class="list-group-item d-flex flex-row align-items-center justify-content-between">
+                <span>{{ task.title }}</span>
+                <div class="d-flex flex-row">
+                  <button class="mx-1 btn btn-secondary">Edit</button>
+                  <button class="mx-1 btn btn-success"><a href="/complete_task/{{task.id}}" class="text-decoration-none text-white">Complete</a></button>
+                  <button class="mx-1 btn btn-danger"><a href="/remove_task/{{ task.id }}" class="text-decoration-none text-white">Remove</a></button>
+                </div>
+              </li>
+            {% else %}
+              <li class="list-group-item d-flex flex-row align-items-center justify-content-between bg-success">
+                <span><del>{{ task.title }}</del></span>
+                <div class="d-flex flex-row">
+                  <button class="mx-1 btn btn-secondary">Edit</button>
+                  <button class="mx-1 btn btn-light"><a href="/complete_task/{{ task.id }}" class="text-decoration-none text-dark">Complete</a></button>
+                  <button class="mx-1 btn btn-danger"><a href="/remove_task/{{ task.id }}" class="text-decoration-none text-white">Remove</a></button>
+                </div>
+              </li>
+            {% endif %}
           {% endfor %}
         </ul>
         <br />

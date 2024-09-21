@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-import time
-
 from .forms import TaskForm
 from .models import Task
 # Create your views here.
@@ -31,9 +29,12 @@ def update_task(request, primary_key):
 
 
 def remove_task(request, primary_key):
-    Task.objects.all().filter(id=primary_key).delete()
+    Task.objects.filter(id=primary_key).delete()
     return redirect("/")
 
 
 def complete_task(request, primary_key):
-    ...
+    situation = Task.objects.filter(id=primary_key).values_list('complete')[0][0]
+    Task.objects.filter(id=primary_key).update(complete=not situation)
+    print(situation)
+    return redirect("/")
