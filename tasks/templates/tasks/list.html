@@ -1,6 +1,9 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+
+{% load widget_tweaks %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,11 +11,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body>
-    <ul>
-      {% for task in tasks %}
-        <li>{{ task.created }}</li>
-      {% endfor %}
-    </ul>
+  <body class="bg-secondary container">
+    <br />
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 card">
+        <br />
+        <h2 class="text-center">Todo app</h2>
+        <br />
+        <form method="POST" action="/">
+          {% csrf_token %}
+          {% render_field form.title placeholder='title:' class='form-control' %}
+          <br />
+          <button type="submit" name="Create Task" class="btn btn-success">Add Task</button>
+        </form>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 card">
+        <br />
+        <ul class="list-group">
+          {% for task in tasks %}
+            <li class="list-group-item d-flex flex-row align-items-center justify-content-between">
+              <span>
+                {{ task.title }}
+              </span>              
+              <div class="d-flex flex-row">
+                <form method="post" action="/update_task/" class="mx-1">
+                  <button class="btn btn-secondary">
+                    Edit
+                  </button>
+                </form>
+                <form method="post" action="/complete_task/" class="mx-1">
+                  <button class="btn btn-success">
+                    Complete
+                  </button>
+                </form>
+                <form method="post" action="/remove_task/" class="mx-1">
+                  <button class="btn btn-danger">
+                    <a href="/remove_task/{{ task.id }}" class="text-decoration-none text-white">
+                      Remove
+                    </a>
+                  </button>
+                </form>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+        <br />
+      </div>
+      <div class="col-md-3"></div>
+    </div>
   </body>
 </html>

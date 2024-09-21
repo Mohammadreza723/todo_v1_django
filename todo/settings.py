@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # installed packages
     'bootstrap5',
+    'widget_tweaks', 
     # installed apps
     'tasks',
 ]
