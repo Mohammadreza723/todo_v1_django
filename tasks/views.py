@@ -3,4 +3,8 @@ from .models import Task
 # Create your views here.
 
 def index(request):
-    return render(request=request, template_name="tasks/list.html")
+    tasks = Task.objects.all()
+    context = {
+        'tasks': tasks
+    }
+    return render(request=request, template_name="tasks/list.html", context=context)
